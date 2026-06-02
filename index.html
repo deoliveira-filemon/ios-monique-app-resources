@@ -170,7 +170,7 @@
 <header>
   <div class="badge">Privacy Policy</div>
   <h1>Monique Cruz Mentora&#174;</h1>
-  <p>Last updated: 22 May 2026 &nbsp;&middot;&nbsp; Effective: 22 May 2026</p>
+  <p>Last updated: 02 June 2026 &nbsp;&middot;&nbsp; Effective: 02 June 2026</p>
 </header>
 
 <main>
@@ -235,11 +235,25 @@
       <li>Package purchases and session usage</li>
     </ul>
 
+    <h3>Mentoring Data</h3>
+    <ul>
+      <li>Mentoring programmes viewed and interacted with</li>
+      <li>Enrolment interest in laser or massage mentoring programmes</li>
+    </ul>
+
+    <h3>Notification Preferences</h3>
+    <ul>
+      <li>Whether you have opted in to appointment reminder notifications</li>
+      <li>Whether you have opted in to promotional push notifications</li>
+      <li>A device push token (FCM token) used solely to deliver notifications you have requested — stored only if you grant notification permission</li>
+    </ul>
+
     <h3>Usage Data</h3>
     <ul>
       <li>App screens visited and features used</li>
       <li>Search queries within the app</li>
       <li>Saved (favourited) procedures</li>
+      <li>A session identifier (UUID) generated per app launch to link related in-session events — this identifier is not linked to your identity</li>
       <li>Device type, operating system version, and app version</li>
     </ul>
 
@@ -255,11 +269,12 @@
     <h2>3. How We Use Your Data</h2>
     <p>We use your personal data for the following purposes:</p>
     <ul>
-      <li><strong>Providing the service</strong> - creating and managing your account, booking and scheduling appointments, tracking your treatment history.</li>
-      <li><strong>Personalisation</strong> - tailoring the app experience to your treatment preferences and history.</li>
-      <li><strong>Communications</strong> - sending appointment confirmations, reminders, and updates about your bookings.</li>
-      <li><strong>Improvement</strong> - understanding how the app is used so we can fix issues and add features (via aggregated, anonymised analytics).</li>
-      <li><strong>Legal obligations</strong> - complying with applicable UK laws and regulations.</li>
+      <li><strong>Providing the service</strong> — creating and managing your account, booking and scheduling appointments, tracking your treatment history.</li>
+      <li><strong>Mentoring</strong> — displaying relevant mentoring programme content and facilitating enrolment enquiries.</li>
+      <li><strong>Personalisation</strong> — tailoring the app experience to your treatment preferences and history.</li>
+      <li><strong>Notifications</strong> — sending appointment-day reminders (at 7 am on the day of your appointment) and promotional messages, based solely on the preferences you configure in the app. You may change or withdraw these preferences at any time in <em>Profile &rsaquo; Notification Settings</em>.</li>
+      <li><strong>Improvement</strong> — understanding how the app is used so we can fix issues and add features (via aggregated, anonymised analytics).</li>
+      <li><strong>Legal obligations</strong> — complying with applicable UK laws and regulations.</li>
     </ul>
 
     <div class="highlight">
@@ -277,9 +292,9 @@
     <div class="card">
       <h3>Service Providers</h3>
       <p>
-        We use Google Firebase (see Section 5) to store and process data on our behalf.
-        These providers act as data processors and are contractually bound to protect
-        your information.
+        We use <strong>Google Firebase</strong> and <strong>Supabase</strong> (see Section 5)
+        to store and process data on our behalf. These providers act as data processors and
+        are contractually bound to protect your information.
       </p>
     </div>
 
@@ -303,10 +318,10 @@
   <!-- 5 -->
   <section id="third-party">
     <h2>5. Third-Party Services</h2>
-    <p>The app uses the following third-party services operated by Google:</p>
+    <p>The app uses the following third-party services:</p>
 
     <div class="card">
-      <h3>Firebase Authentication</h3>
+      <h3>Firebase Authentication &nbsp;<span style="font-size:0.8rem;font-weight:400;color:var(--muted);">Google</span></h3>
       <p>
         Used to create and manage user accounts securely using email and password.
         Google processes authentication tokens on our behalf.
@@ -315,16 +330,27 @@
     </div>
 
     <div class="card">
-      <h3>Cloud Firestore</h3>
+      <h3>Cloud Firestore &nbsp;<span style="font-size:0.8rem;font-weight:400;color:var(--muted);">Google</span></h3>
       <p>
         Used to store your account profile, appointment history, treatment records,
-        and app preferences. Data is stored in Google Cloud infrastructure.
+        mentoring content, and app preferences. Data is stored in Google Cloud infrastructure.
         <br><a href="https://cloud.google.com/terms/data-processing-addendum" target="_blank" rel="noopener">Google Cloud Data Processing</a>
       </p>
     </div>
 
     <div class="card">
-      <h3>Firebase Analytics</h3>
+      <h3>Firebase Cloud Messaging (FCM) &nbsp;<span style="font-size:0.8rem;font-weight:400;color:var(--muted);">Google</span></h3>
+      <p>
+        Used to deliver push notifications to your device when you have granted notification
+        permission and enabled promotional notifications in the app. Your FCM device token
+        is stored in our database solely to route notifications to your device; it is never
+        shared with third parties or used for advertising targeting.
+        <br><a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Firebase Privacy Information</a>
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Firebase Analytics &nbsp;<span style="font-size:0.8rem;font-weight:400;color:var(--muted);">Google</span></h3>
       <p>
         Used to collect anonymised, aggregated usage statistics to help us improve the
         app. Analytics is only active in production builds and does not identify you
@@ -333,10 +359,25 @@
       </p>
     </div>
 
+    <div class="card">
+      <h3>Supabase &nbsp;<span style="font-size:0.8rem;font-weight:400;color:var(--muted);">Supabase Inc.</span></h3>
+      <p>
+        Used as a supplemental data store for notification preferences, FCM tokens, and
+        anonymised in-app analytics events. Analytics events are stored in a flat
+        <code>analytics_events</code> table with a JSONB parameters column; rows contain
+        only a per-session UUID and event metadata — no personally identifiable information.
+        Row Level Security (RLS) policies on this table allow anonymous insert only;
+        read access requires a service-role key held exclusively by our internal CRM.
+        <br><a href="https://supabase.com/privacy" target="_blank" rel="noopener">Supabase Privacy Policy</a>
+      </p>
+    </div>
+
     <p>
       Google's services are subject to Google's own
       <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Privacy Policy</a>.
       Google operates under the EU-US and UK-US Data Privacy Frameworks.
+      Supabase stores data in AWS infrastructure and is subject to the
+      <a href="https://supabase.com/privacy" target="_blank" rel="noopener">Supabase Privacy Policy</a>.
     </p>
   </section>
 
@@ -348,9 +389,9 @@
       to provide our services. If you request deletion of your account:
     </p>
     <ul>
-      <li>Your profile and account data will be deleted within <strong>30 days</strong>.</li>
+      <li>Your profile, account data, and FCM token will be deleted within <strong>30 days</strong>.</li>
       <li>Appointment and treatment records may be retained for up to <strong>7 years</strong> where required for legal, tax, or regulatory purposes.</li>
-      <li>Anonymised, aggregated analytics data is retained indefinitely as it cannot be linked back to you.</li>
+      <li>Anonymised, aggregated analytics data (including session-scoped event records) is retained indefinitely as it cannot be linked back to you.</li>
     </ul>
   </section>
 
@@ -362,18 +403,20 @@
       the following rights:
     </p>
     <ul>
-      <li><strong>Right of access</strong> - request a copy of the personal data we hold about you.</li>
-      <li><strong>Right to rectification</strong> - ask us to correct inaccurate or incomplete data.</li>
-      <li><strong>Right to erasure</strong> - request deletion of your personal data ("right to be forgotten").</li>
-      <li><strong>Right to restriction</strong> - ask us to restrict processing of your data in certain circumstances.</li>
-      <li><strong>Right to data portability</strong> - receive your data in a structured, machine-readable format.</li>
-      <li><strong>Right to object</strong> - object to processing based on legitimate interests.</li>
-      <li><strong>Rights related to automated decision-making</strong> - we do not carry out automated decision-making with your data.</li>
+      <li><strong>Right of access</strong> — request a copy of the personal data we hold about you.</li>
+      <li><strong>Right to rectification</strong> — ask us to correct inaccurate or incomplete data.</li>
+      <li><strong>Right to erasure</strong> — request deletion of your personal data ("right to be forgotten").</li>
+      <li><strong>Right to restriction</strong> — ask us to restrict processing of your data in certain circumstances.</li>
+      <li><strong>Right to data portability</strong> — receive your data in a structured, machine-readable format.</li>
+      <li><strong>Right to object</strong> — object to processing based on legitimate interests.</li>
+      <li><strong>Rights related to automated decision-making</strong> — we do not carry out automated decision-making with your data.</li>
     </ul>
     <p>
-      To exercise any of these rights, please contact us at the address in
-      <a href="#contact">Section 11</a>. We will respond within <strong>30 days</strong>.
-      You also have the right to lodge a complaint with the
+      You may withdraw consent to push notifications at any time in
+      <em>Profile &rsaquo; Notification Settings</em> within the app, or through your
+      device's iOS notification settings. To exercise any of the rights above, please
+      contact us at the address in <a href="#contact">Section 11</a>. We will respond
+      within <strong>30 days</strong>. You also have the right to lodge a complaint with the
       <a href="https://ico.org.uk" target="_blank" rel="noopener">Information Commissioner's Office (ICO)</a>,
       the UK supervisory authority for data protection.
     </p>
@@ -389,7 +432,9 @@
       <li>All data is transmitted over encrypted HTTPS connections.</li>
       <li>Firebase Authentication uses industry-standard token-based security.</li>
       <li>Firestore security rules restrict data access to the authenticated account owner.</li>
-      <li>We do not store passwords - authentication is managed by Firebase.</li>
+      <li>We do not store passwords — authentication is managed by Firebase.</li>
+      <li>Supabase Row Level Security (RLS) policies limit the <code>analytics_events</code> table to anonymous insert only; all reads require a privileged service-role key that is never embedded in the iOS app.</li>
+      <li>FCM device tokens are stored in our database and are never exposed client-side beyond the device that generated them.</li>
     </ul>
     <p>
       While we take all reasonable steps to protect your data, no method of transmission
@@ -429,7 +474,7 @@
     <div class="card">
       <h3>Monique Cruz Studio</h3>
       <p>
-        <strong>Email:</strong> <a href="mailto:CONTACT_EMAIL">nique.olimpio@gmail.com</a><br>
+        <strong>Email:</strong> <a href="mailto:nique.olimpio@gmail.com">nique.olimpio@gmail.com</a><br>
         <strong>Location:</strong> London, United Kingdom
       </p>
     </div>
