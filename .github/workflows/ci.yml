@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validate Assets
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check for broken image references in HTML
+        run: |
+          if [ -f index.html ]; then
+            echo "Checking index.html..."
+            grep -oP 'src="\K[^"]+' index.html | while read -r src; do
+              if [[ "$src" != http* ]] && [ ! -f "$src" ]; then
+                echo "Missing asset: $src"
+                exit 1
+              fi
+            done
+            echo "All referenced assets found."
+          else
+            echo "No index.html — skipping asset check."
+          fi
+
+      - name: Count assets
+        run: |
+          echo "Images:"
+          find . -name "*.png" -o -name "*.jpg" -o -name "*.jpeg" -o -name "*.svg" -o -name "*.webp" \
+            | grep -v ".git" | wc -l
